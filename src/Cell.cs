@@ -6,14 +6,41 @@ namespace VonRiddarn.BombSwatter
 	internal sealed class Cell
 	{
 
+		// Static
 		static bool _firstClick = true;
+
+		// Public
+		public (int row, int col) Position { get; private set; } = (0, 0);
+
+		// Private
+		int _adjacentBombs = 0;
+		bool _isBomb = false;
 
 		CellState _cellState = CellState.Default;
 		Cell[] _adjacentCells = null;
+		Board _board;
 
-		(int row, int col) _position = (0, 0);
-		int _adjacentBombs = 0;
-		bool _isBomb = false;
+		public Cell(Board board, (int row, int col) position)
+		{
+			Position = position;
+			_board = board;
+		}
+
+		public override string ToString()
+		{
+			return _isBomb ? "1" : "0";
+		}
+
+		public Cell MakeBomb()
+		{
+			_isBomb = true;
+			return this;
+		}
+
+		void AddBomb()
+		{
+			_adjacentBombs++;
+		}
 
 		public void NextCellState()
 		{ 
@@ -22,8 +49,16 @@ namespace VonRiddarn.BombSwatter
 		}
 
 		public void Activate()
-		{ 
-			// If this cell is not in the default state, do not activate.
+		{
+			if (_cellState != CellState.Default)
+				return;
+
+			if (_firstClick)
+			{
+				_board.GenerateBombs(this);
+				_firstClick = false;
+			}
+
 			// If this cell has 0 adjacent bombs, activate all cells around it that also has 0 adjacent bombs.
 		}
 
