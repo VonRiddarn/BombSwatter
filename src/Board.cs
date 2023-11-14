@@ -5,6 +5,15 @@ namespace VonRiddarn.BombSwatter
 {
 	internal sealed class Board
 	{
+		// IMPORTANT NOTE
+		// 2D arrays move top -> bottom.
+		//		 Col 0	Col 1	Col 2
+		// Row 0 [0,0]	[0,1]	[0,1]
+		// Row 1 [1,0]	[1,1]	[1,2]
+		// Row 2 [2,0]	[2,1]	[2,2]
+		// When nesting loops, nest row as i and column as j.
+
+
 		// Private
 		Random _random = new Random();
 		
@@ -14,6 +23,8 @@ namespace VonRiddarn.BombSwatter
 		int _bombAmount = 0;
 		int _disarmedAmount = 0;
 
+		// When called "presses" the cell at the top left on the board.
+		// Used to debug the game.
 		public void TestStartGame()
 		{
 			_cellMap[0, 0].Activate();
@@ -35,10 +46,16 @@ namespace VonRiddarn.BombSwatter
 					_cellMap[i, j] = new Cell(this, (i,j));
 				}
 			}
+
+			foreach (Cell cell in _cellMap)
+			{
+				cell.AdjacentCells = _GetAdjacentCells(cell);
+			}
+
 		}
 
 		// This will place all the bombs on the board and give all cells around those bombs numbers.
-		// Called from the first pressed cell.
+		// Called from the first cell the player interacts with.
 		public void GenerateBombs(Cell firstCell)
 		{
 			// Generate a list of all avalible bomb slots.
@@ -67,26 +84,56 @@ namespace VonRiddarn.BombSwatter
 				availibleSlots.RemoveAt(_);
 			}
 
-			// List<Cell> availible = all items in _cellMap
-			// availible.Remove(firstCell)
-			// Each bomb added availible.Remove(addedBomb)
-
-			// Generate bombs across the board.
-			// Bombs can not be placed in cells occupied by other bombs.
-			// Bombs can not be placed on the firstCell cell.
+			// Update all the numbers of cells adjacent to bombs.
+			foreach (Cell bomb in _bombCells)
+			{
+				foreach (Cell cell in bomb.AdjacentCells)
+				{
+					cell.AddBomb();
+				}
+			}
 		}
 
-		void UpdateBombs()
-		{ 
-			// Go through all cells that are bombs and add +1 to their adjacent cells.
-		}
 
-		Cell[] GetAdjacentCells(Cell cell)
+		Cell[] _GetAdjacentCells(Cell cell)
 		{
-			// Get the adjacent cells from _cellMap[cell.position.row,cell.position.col]
-			return null;
+			List<Cell> tempCells = new List<Cell>();
+
+			for (int i = -1; i < 2; i++) // Row offset
+			{
+				for (int j = -1; j < 2; j++) // Column offset
+				{
+
+					// Get the direction to check.
+					// Top left [-1,-1] || Bottom right [+1, +1]
+					int directionY = cell.Position.row + i;
+					int directionX = cell.Position.col + j;
+
+
+					// Skip this itteration if we are on the parameter cell position.
+					if (cell.Position.row == directionY && cell.Position.col == directionX)
+						continue;
+
+
+					// This is a kind of lazy implementation.
+					// We simply let the array fall out of range and catch the error without handling it.
+					// No idea how this affects performance, but it couldn't be too bad.
+					try
+					{
+						tempCells.Add(_cellMap[directionY, directionX]);
+					}
+					catch { } // Array out of bounds, do nothing.
+				}
+			}
+
+			return tempCells.ToArray();
 		}
 
+
+		// Return the board as ASCII art.
+		// [X][2][0][0]
+		// [3][X][2][0]
+		// [2][X][2][0]
 		public override string ToString()
 		{
 			string s = String.Empty;

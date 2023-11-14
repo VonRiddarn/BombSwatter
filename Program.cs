@@ -11,7 +11,7 @@ internal class Program
 
 		// Todo: Check systems here
 
-		Board board = new Board(15, 15, 50);
+		Board board = new Board(15, 15, 20);
 		board.TestStartGame();
 
 		Debug.WriteLine(board.ToString());

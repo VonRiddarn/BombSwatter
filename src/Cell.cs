@@ -10,6 +10,7 @@ namespace VonRiddarn.BombSwatter
 		static bool _firstClick = true;
 
 		// Public
+		public Cell[] AdjacentCells { get; set; } = null;
 		public (int row, int col) Position { get; private set; } = (0, 0);
 
 		// Private
@@ -17,7 +18,6 @@ namespace VonRiddarn.BombSwatter
 		bool _isBomb = false;
 
 		CellState _cellState = CellState.Default;
-		Cell[] _adjacentCells = null;
 		Board _board;
 
 		public Cell(Board board, (int row, int col) position)
@@ -28,7 +28,10 @@ namespace VonRiddarn.BombSwatter
 
 		public override string ToString()
 		{
-			return _isBomb ? "1" : "0";
+			if (_isBomb)
+				return "[X]";
+
+			return "[" + _adjacentBombs.ToString() + "]";
 		}
 
 		public Cell MakeBomb()
@@ -37,7 +40,7 @@ namespace VonRiddarn.BombSwatter
 			return this;
 		}
 
-		void AddBomb()
+		public void AddBomb()
 		{
 			_adjacentBombs++;
 		}
