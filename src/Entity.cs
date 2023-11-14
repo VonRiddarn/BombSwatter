@@ -40,7 +40,7 @@ namespace VonRiddarn.BombSwatter
 			MouseState ms = Mouse.GetState();
 			Point mp = new Point(ms.X, ms.Y);
 
-			if (mp.X > _position.X && mp.Y > _position.Y && mp.X < _position.X + Width && mp.Y < _position.Y + Height)
+			if (mp.X >= _position.X && mp.Y >= _position.Y && mp.X < _position.X + Width && mp.Y < _position.Y + Height)
 			{
 				if (!_isHovering)
 				{
