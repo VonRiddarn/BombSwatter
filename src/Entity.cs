@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace VonRiddarn.BombSwatter
 {
-	internal abstract  class Entity
+	internal abstract class Entity
 	{
 		public int Width { get { return _texture.Width; } }
 		public int Height { get { return _texture.Height; } }
@@ -44,7 +44,7 @@ namespace VonRiddarn.BombSwatter
 			{
 				if (!_isHovering)
 				{
-					OnHoverEnter();
+                    OnHoverEnter();
 					_isHovering = true;
 				}
 				else

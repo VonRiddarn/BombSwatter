@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace VonRiddarn.BombSwatter
 {
-	internal sealed partial class Cell : Entity
+	internal sealed class Cell : Entity
 	{
 
 		// Static
