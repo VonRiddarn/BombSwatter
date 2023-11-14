@@ -72,12 +72,10 @@ namespace VonRiddarn.BombSwatter
 
 		// ----- GRAPHICS & RENDERING -----
 
-		public override void Draw(SpriteBatch spriteBatch)
+		public void UpdateCellPosition()
 		{
-			_position.X = CellPosition.col * 32;
-			_position.Y = CellPosition.row * 32;
-
-			base.Draw(spriteBatch);
+			_position.X = CellPosition.col * _texture.Height;
+			_position.Y = CellPosition.row * _texture.Width;
 		}
 
 		// Return the cell as a number or an X

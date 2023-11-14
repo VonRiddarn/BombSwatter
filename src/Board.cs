@@ -45,6 +45,8 @@ namespace VonRiddarn.BombSwatter
 			ConstructCellsInCellMap();
 		}
 
+		// Construct cells
+		// Add adjacent cells
 		void ConstructCellsInCellMap()
 		{
 			for (int i = 0; i < _cellMap.GetLength(0); i++)
@@ -149,17 +151,23 @@ namespace VonRiddarn.BombSwatter
 			}
 		}
 
+		// Set all cell textures
+		// Update position to match cellmap and texture size
 		public void SetAllCellTextures(Texture2D texture)
 		{
 			foreach (Cell cell in _cellMap)
 			{
 				cell.SetTexture(texture);
+				cell.UpdateCellPosition();
 			}
 		}
 
+		// Set cell texture
+		// Update position to match cellmap and texture size
 		public void SetCellTexture(Cell cell, Texture2D texture)
 		{
 			cell.SetTexture(texture);
+			cell.UpdateCellPosition();
 		}
 
 
