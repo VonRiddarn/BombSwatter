@@ -28,9 +28,9 @@ namespace VonRiddarn.BombSwatter
 
 		void ConstructCellsInCellMap()
 		{
-			for (int i = 0; i < _cellMap.GetUpperBound(0); i++)
+			for (int i = 0; i < _cellMap.GetLength(0); i++)
 			{
-				for (int j = 0; j < _cellMap.GetUpperBound(1); j++)
+				for (int j = 0; j < _cellMap.GetLength(1); j++)
 				{
 					_cellMap[i, j] = new Cell(this, (i,j));
 				}
@@ -52,9 +52,9 @@ namespace VonRiddarn.BombSwatter
 			// Remove the first cell from the list.
 			availibleSlots.Remove(firstCell);
 
-			//// Failsafe to never have too many bombs.
-			//if (_bombAmount > availibleSlots.Count)
-			//	_bombAmount = availibleSlots.Count - 1;
+			// Failsafe to never have too many bombs.
+			if (_bombAmount > availibleSlots.Count)
+				_bombAmount = availibleSlots.Count;
 
 			for (int i = 0; i < _bombAmount; i++)
 			{
@@ -91,9 +91,9 @@ namespace VonRiddarn.BombSwatter
 		{
 			string s = String.Empty;
 
-			for (int i = 0; i < _cellMap.GetUpperBound(0); i++)
+			for (int i = 0; i < _cellMap.GetLength(0); i++)
 			{
-				for (int j = 0; j < _cellMap.GetUpperBound(1); j++)
+				for (int j = 0; j < _cellMap.GetLength(1); j++)
 				{
 					s += _cellMap[i, j].ToString();
 				}
