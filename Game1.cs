@@ -26,8 +26,6 @@ namespace VonRiddarn.BombSwatter
 			_graphics.PreferredBackBufferHeight = board.Height * 32;
 			_graphics.ApplyChanges();
 
-
-
 			base.Initialize();
 		}
 

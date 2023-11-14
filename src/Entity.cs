@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace VonRiddarn.BombSwatter
 {
@@ -23,6 +24,11 @@ namespace VonRiddarn.BombSwatter
 		public void SetPosition(Vector2 position)
 		{
 			_position = position;
+		}
+
+		public virtual void Update()
+		{
+			MouseState ms = Mouse.GetState();
 		}
 	}
 }

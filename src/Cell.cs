@@ -74,7 +74,10 @@ namespace VonRiddarn.BombSwatter
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
-			spriteBatch.Draw(_texture, new Vector2(CellPosition.col * 32, CellPosition.row * 32), color);
+			_position.X = CellPosition.col * 32;
+			_position.Y = CellPosition.row * 32;
+
+			base.Draw(spriteBatch);
 		}
 
 		// Return the cell as a number or an X
