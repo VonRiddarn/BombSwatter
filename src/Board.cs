@@ -128,6 +128,9 @@ namespace VonRiddarn.BombSwatter
 					// This is a kind of lazy implementation.
 					// We simply let the array fall out of range and catch the error without handling it.
 					// No idea how this affects performance, but it couldn't be too bad.
+
+					// Nevermind.... We need to fix this. The console gets blasted everytime the game starts.
+					// TODO: Limit direction to be within the confounds of the array.
 					try
 					{
 						tempCells.Add(_cellMap[directionY, directionX]);
