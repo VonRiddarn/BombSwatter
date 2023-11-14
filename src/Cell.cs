@@ -69,6 +69,17 @@ namespace VonRiddarn.BombSwatter
 			// [StateDecorFlag.png]
 		}
 
+		// ----- LOGIC & UPDATE -----
+
+		public override void OnHoverEnter()
+		{
+			Color = Color.Yellow;
+		}
+
+		public override void OnHoverExit()
+		{
+			Color = Color.Green;
+		}
 
 		// ----- GRAPHICS & RENDERING -----
 

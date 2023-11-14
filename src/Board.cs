@@ -139,6 +139,16 @@ namespace VonRiddarn.BombSwatter
 			return tempCells.ToArray();
 		}
 
+		// ----- LOGIC & UPDATES -----
+
+		public void UpdateCells()
+		{
+			foreach (Cell cell in _cellMap)
+			{
+				cell.UpdateEvents();
+				// cell.Update();
+			}
+		}
 
 
 		// ----- GRAPHICS & RENDERING -----

@@ -46,6 +46,7 @@ namespace VonRiddarn.BombSwatter
 				Exit();
 
 			// TODO: Add your update logic here
+			board.UpdateCells();
 
 			base.Update(gameTime);
 		}
