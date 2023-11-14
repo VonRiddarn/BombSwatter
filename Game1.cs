@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BombSwatter
+namespace VonRiddarn.BombSwatter
 {
 	public class Game1 : Game
 	{
