@@ -9,6 +9,9 @@ namespace VonRiddarn.BombSwatter
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
+		Board board = new Board(15, 25, 20);
+		Texture2D cellTexture;
+
 		public Game1()
 		{
 			_graphics = new GraphicsDeviceManager(this);
@@ -19,6 +22,11 @@ namespace VonRiddarn.BombSwatter
 		protected override void Initialize()
 		{
 			// TODO: Add your initialization logic here
+			_graphics.PreferredBackBufferWidth = board.Width * 32;
+			_graphics.PreferredBackBufferHeight = board.Height * 32;
+			_graphics.ApplyChanges();
+
+
 
 			base.Initialize();
 		}
@@ -28,6 +36,10 @@ namespace VonRiddarn.BombSwatter
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: use this.Content to load your game content here
+
+			cellTexture = Content.Load<Texture2D>("Tile_Default");
+			board.SetAllCellTextures(cellTexture);
+
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -45,6 +57,12 @@ namespace VonRiddarn.BombSwatter
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
 			// TODO: Add your drawing code here
+			_spriteBatch.Begin();
+
+			board.DrawCells(_spriteBatch);
+
+			_spriteBatch.End();
+
 
 			base.Draw(gameTime);
 		}

@@ -10,9 +10,19 @@ namespace VonRiddarn.BombSwatter
 		protected Texture2D _texture;
 		protected Vector2 _position;
 
-		public void Draw(SpriteBatch spriteBatch)
+		public virtual void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(_texture, _position, color);
+		}
+
+		public void SetTexture(Texture2D texture)
+		{
+			_texture = texture;
+		}
+
+		public void SetPosition(Vector2 position)
+		{
+			_position = position;
 		}
 	}
 }

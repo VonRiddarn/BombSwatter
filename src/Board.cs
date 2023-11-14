@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace VonRiddarn.BombSwatter
@@ -13,6 +14,10 @@ namespace VonRiddarn.BombSwatter
 		// Row 2 [2,0]	[2,1]	[2,2]
 		// When nesting loops, nest row as i and column as j.
 
+		// Public
+
+		public int Width { get; private set; }
+		public int Height { get; private set; }
 
 		// Private
 		Random _random = new Random();
@@ -32,8 +37,11 @@ namespace VonRiddarn.BombSwatter
 
 		public Board(int width, int height, int bombs)
 		{
+			Width = width;
+			Height = height;
+
 			_bombAmount = bombs;
-			_cellMap = new Cell[width, height];
+			_cellMap = new Cell[height, width];
 			ConstructCellsInCellMap();
 		}
 
@@ -106,12 +114,12 @@ namespace VonRiddarn.BombSwatter
 
 					// Get the direction to check.
 					// Top left [-1,-1] || Bottom right [+1, +1]
-					int directionY = cell.Position.row + i;
-					int directionX = cell.Position.col + j;
+					int directionY = cell.CellPosition.row + i;
+					int directionX = cell.CellPosition.col + j;
 
 
 					// Skip this itteration if we are on the parameter cell position.
-					if (cell.Position.row == directionY && cell.Position.col == directionX)
+					if (cell.CellPosition.row == directionY && cell.CellPosition.col == directionX)
 						continue;
 
 
@@ -127,6 +135,31 @@ namespace VonRiddarn.BombSwatter
 			}
 
 			return tempCells.ToArray();
+		}
+
+
+
+		// ----- GRAPHICS & RENDERING -----
+
+		public void DrawCells(SpriteBatch spriteBatch)
+		{
+			foreach (Cell cell in _cellMap)
+			{
+				cell.Draw(spriteBatch);
+			}
+		}
+
+		public void SetAllCellTextures(Texture2D texture)
+		{
+			foreach (Cell cell in _cellMap)
+			{
+				cell.SetTexture(texture);
+			}
+		}
+
+		public void SetCellTexture(Cell cell, Texture2D texture)
+		{
+			cell.SetTexture(texture);
 		}
 
 
@@ -149,5 +182,6 @@ namespace VonRiddarn.BombSwatter
 
 			return s;
 		}
+
 	}
 }

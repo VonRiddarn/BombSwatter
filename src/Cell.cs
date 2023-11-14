@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections;
 
 namespace VonRiddarn.BombSwatter
 {
-	internal sealed class Cell : Entity
+	internal sealed partial class Cell : Entity
 	{
 
 		// Static
@@ -11,7 +13,7 @@ namespace VonRiddarn.BombSwatter
 
 		// Public
 		public Cell[] AdjacentCells { get; set; } = null;
-		public (int row, int col) Position { get; private set; } = (0, 0);
+		public (int row, int col) CellPosition { get; private set; } = (0, 0);
 
 		// Private
 		int _adjacentBombs = 0;
@@ -20,18 +22,10 @@ namespace VonRiddarn.BombSwatter
 		CellState _cellState = CellState.Default;
 		Board _board;
 
-		public Cell(Board board, (int row, int col) position)
+		public Cell(Board board, (int row, int col) cellPosition)
 		{
-			Position = position;
+			CellPosition = cellPosition;
 			_board = board;
-		}
-
-		public override string ToString()
-		{
-			if (_isBomb)
-				return "[X]";
-
-			return "[" + _adjacentBombs.ToString() + "]";
 		}
 
 		public Cell MakeBomb()
@@ -73,6 +67,24 @@ namespace VonRiddarn.BombSwatter
 			// [BoxActive.png]
 			// [DecorBomb.png]
 			// [StateDecorFlag.png]
+		}
+
+
+		// ----- GRAPHICS & RENDERING -----
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			spriteBatch.Draw(_texture, new Vector2(CellPosition.col * 32, CellPosition.row * 32), color);
+		}
+
+		// Return the cell as a number or an X
+		// [X],[0],[1],[2],[3],[4],[5],[6],[7],[8]
+		public override string ToString()
+		{
+			if (_isBomb)
+				return "[X]";
+
+			return "[" + _adjacentBombs.ToString() + "]";
 		}
 
 	}
