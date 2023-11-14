@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace VonRiddarn.BombSwatter
 {
-	internal sealed class Cell
+	internal sealed class Cell : Entity
 	{
 
 		// Static
