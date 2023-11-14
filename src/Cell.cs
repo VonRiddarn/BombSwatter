@@ -1,7 +1,13 @@
-﻿namespace VonRiddarn.BombSwatter
+﻿using System;
+using System.Collections;
+
+namespace VonRiddarn.BombSwatter
 {
 	internal sealed class Cell
 	{
+
+		static bool _firstClick = true;
+
 		CellState _cellState = CellState.Default;
 		Cell[] _adjacentCells = null;
 
