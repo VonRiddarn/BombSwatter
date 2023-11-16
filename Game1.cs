@@ -46,15 +46,6 @@ namespace VonRiddarn.BombSwatter
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
 
-			if (Keyboard.GetState().IsKeyDown(Keys.R) && !restartFlag)
-			{
-				board = new Board(15, 25, 25);
-				board.InitializeAllCellTextures();
-				restartFlag = true;
-			}
-			if(Keyboard.GetState().IsKeyUp(Keys.R))
-				restartFlag = false;
-
 			// TODO: Add your update logic here
 			board.UpdateCells();
 
@@ -74,6 +65,22 @@ namespace VonRiddarn.BombSwatter
 
 
 			base.Draw(gameTime);
+		}
+
+		// Check if we press R for 1 frame.
+		// If we do, we reset the game in the least optimized way possible.
+		// This will send TONS of data to the garbage collector and freeze the game for about 2 seconds.
+		// Might optimize later but it's 5'o clock in the morning.
+		void CheckForRestart()
+		{
+			if (Keyboard.GetState().IsKeyDown(Keys.R) && !restartFlag)
+			{
+				board = new Board(15, 25, 25);
+				board.InitializeAllCellTextures();
+				restartFlag = true;
+			}
+			if (Keyboard.GetState().IsKeyUp(Keys.R))
+				restartFlag = false;
 		}
 	}
 }
