@@ -41,6 +41,14 @@ namespace VonRiddarn.BombSwatter
 			ConstructCellsInCellMap();
 		}
 
+		public void LoseGame()
+		{
+			foreach (Cell cell in _cellMap)
+			{
+				cell.ForceActivate();
+			}
+		}
+
 		// Construct cells
 		// Add adjacent cells
 		void ConstructCellsInCellMap()

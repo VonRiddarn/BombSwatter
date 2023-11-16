@@ -34,7 +34,7 @@ namespace VonRiddarn.BombSwatter
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: use this.Content to load your game content here
-
+			Data.LoadTextures(Content);
 			cellTexture = Content.Load<Texture2D>("Tile_Default");
 			board.SetAllCellTextures(cellTexture);
 
