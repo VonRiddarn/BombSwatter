@@ -24,4 +24,5 @@ Notice: Disarmed and flagged cells cannot be opened.<br/>
 
 ## How to use
 Download, compile and run the code.<br/>
-I might add the executeable at a later time.<br/>
+If you're on windows I provided the executeable in "Release_Windows"<br/>
+To anyone else, sorry for the additional unnecessary files.
