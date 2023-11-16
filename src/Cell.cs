@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections;
+using System.Diagnostics;
 
 namespace VonRiddarn.BombSwatter
 {
@@ -12,14 +13,21 @@ namespace VonRiddarn.BombSwatter
 		static bool _firstClick = true;
 
 		// Public
+		public CellState CellState { get; private set; } = CellState.Default;
 		public Cell[] AdjacentCells { get; set; } = null;
 		public (int row, int col) CellPosition { get; private set; } = (0, 0);
 
 		// Private
+		bool _active = true;
+
 		int _adjacentBombs = 0;
+		public int AdjacentBombs
+		{
+			get { return _isBomb ? -1 : _adjacentBombs; }
+		}
 		bool _isBomb = false;
 
-		CellState _cellState = CellState.Default;
+
 		Board _board;
 
 		public Cell(Board board, (int row, int col) cellPosition)
@@ -47,13 +55,56 @@ namespace VonRiddarn.BombSwatter
 
 		public void Activate()
 		{
-			if (_cellState != CellState.Default)
+			if (CellState != CellState.Default)
 				return;
+
+			CellState = CellState.Activated;
 
 			if (_firstClick)
 			{
 				_board.GenerateBombs(this);
 				_firstClick = false;
+			}
+
+			switch (AdjacentBombs)
+			{
+				case -1:
+					Color = Color.Black;
+					break;
+				case 0:
+					Color = Color.Green;
+					foreach (Cell cell in AdjacentCells)
+					{
+						if (cell.AdjacentBombs != -1 && cell.CellState == CellState.Default && cell != this)
+							cell.Activate();
+					}
+					break;
+				case 1:
+					Color = Color.LightCyan;
+					break;
+				case 2:
+					Color = Color.LightBlue;
+					break;
+				case 3:
+					Color = Color.Blue;
+					break;
+				case 4:
+					Color = Color.Yellow;
+					break;
+				case 5:
+					Color = Color.Orange;
+					break;
+				case 6:
+					Color = Color.Red;
+					break;
+				case 7:
+					Color = Color.DarkRed;
+					break;
+				case 8:
+					Color = Color.DarkRed;
+					break;
+				default:
+					break;
 			}
 
 			// If this cell has 0 adjacent bombs, activate all cells around it that also has 0 adjacent bombs.
@@ -71,14 +122,41 @@ namespace VonRiddarn.BombSwatter
 
 		// ----- LOGIC & UPDATE -----
 
+
+
+		public override void OnLeftMouseDown()
+		{
+			if (CellState != CellState.Default)
+				return;
+
+			Activate();
+			Debug.Write(ToString());
+
+		}
+
+		public override void OnRightMouseDown()
+		{
+			if (CellState != CellState.Default)
+				return;
+
+			Color = Color.Purple;
+			CellState = CellState.Flagged;
+		}
+
 		public override void OnHoverEnter()
 		{
+			if (CellState != CellState.Default)
+				return;
+
 			Color = Color.Yellow;
 		}
 
 		public override void OnHoverExit()
 		{
-			Color = Color.Green;
+			if (CellState != CellState.Default)
+				return;
+
+			Color = Color.White;
 		}
 
 		// ----- GRAPHICS & RENDERING -----

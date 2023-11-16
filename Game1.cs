@@ -9,7 +9,7 @@ namespace VonRiddarn.BombSwatter
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		Board board = new Board(15, 25, 20);
+		Board board = new Board(15, 25, 25);
 		Texture2D cellTexture;
 
 		public Game1()

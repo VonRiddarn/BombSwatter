@@ -30,10 +30,6 @@ namespace VonRiddarn.BombSwatter
 
 		// When called "presses" the cell at the top left on the board.
 		// Used to debug the game.
-		public void TestStartGame()
-		{
-			_cellMap[0, 0].Activate();
-		}
 
 		public Board(int width, int height, int bombs)
 		{
