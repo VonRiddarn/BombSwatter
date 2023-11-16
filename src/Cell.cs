@@ -122,18 +122,12 @@ namespace VonRiddarn.BombSwatter
 
 		public override void OnHoverEnter()
 		{
-			if (CellState == CellState.Activated)
-				return;
-
-			Color = Color.Yellow;
+			_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Marker));
 		}
 
 		public override void OnHoverExit()
 		{
-			if (CellState == CellState.Activated)
-				return;
-
-			Color = Color.White;
+			_tileDecors.Remove(Data.GetTexture(TextureKeys.TileDecor_Marker));
 		}
 
 		// ----- GRAPHICS & RENDERING -----
