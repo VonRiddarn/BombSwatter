@@ -35,6 +35,7 @@ namespace VonRiddarn.BombSwatter
 		{
 			CellPosition = cellPosition;
 			_board = board;
+			_firstClick = true;
 		}
 
 		public Cell MakeBomb()
@@ -160,14 +161,12 @@ namespace VonRiddarn.BombSwatter
 		public void ApplyActivateGraphics()
 		{
 			_texture = Data.GetTexture(TextureKeys.Tile_Activated);
-			Color = Color.White;
 
 			// Add tile decor layer 1
 			switch (AdjacentBombs)
 			{
 				case -1:
 					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Bomb));
-					Color = Color.Red;
 					break;
 				case 1:
 					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_1));
@@ -201,14 +200,12 @@ namespace VonRiddarn.BombSwatter
 		public void ApplyForceActivateGraphics()
 		{
 			_texture = Data.GetTexture(TextureKeys.Tile_Activated);
-			Color = Color.White;
 
 			// Add tile decor layer 1
 			switch (AdjacentBombs)
 			{
 				case -1:
 					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Bomb));
-					Color = Color.Red;
 					break;
 				case 1:
 					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_1));

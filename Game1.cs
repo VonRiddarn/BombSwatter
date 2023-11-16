@@ -12,6 +12,8 @@ namespace VonRiddarn.BombSwatter
 		Board board = new Board(15, 25, 25);
 		Texture2D cellTexture;
 
+		bool restartFlag = false;
+
 		public Game1()
 		{
 			_graphics = new GraphicsDeviceManager(this);
@@ -35,8 +37,7 @@ namespace VonRiddarn.BombSwatter
 
 			// TODO: use this.Content to load your game content here
 			Data.LoadTextures(Content);
-			cellTexture = Content.Load<Texture2D>("Tile_Default");
-			board.SetAllCellTextures(cellTexture);
+			board.InitializeAllCellTextures();
 
 		}
 
@@ -44,6 +45,15 @@ namespace VonRiddarn.BombSwatter
 		{
 			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
 				Exit();
+
+			if (Keyboard.GetState().IsKeyDown(Keys.R) && !restartFlag)
+			{
+				board = new Board(15, 25, 25);
+				board.InitializeAllCellTextures();
+				restartFlag = true;
+			}
+			if(Keyboard.GetState().IsKeyUp(Keys.R))
+				restartFlag = false;
 
 			// TODO: Add your update logic here
 			board.UpdateCells();

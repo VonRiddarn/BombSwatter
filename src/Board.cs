@@ -178,6 +178,8 @@ namespace VonRiddarn.BombSwatter
 			}
 		}
 
+		public void InitializeAllCellTextures() => SetAllCellTextures(Data.GetTexture(TextureKeys.Tile_Default));
+
 		// Set all cell textures
 		// Update position to match cellmap and texture size
 		public void SetAllCellTextures(Texture2D texture)
