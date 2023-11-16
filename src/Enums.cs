@@ -18,6 +18,7 @@
 		TileDecor_Bomb,
 		TileDecor_X,
 		TileDecor_Box,
+		TileDecor_Marker,
 		TileDecor_1,
 		TileDecor_2,
 		TileDecor_3,

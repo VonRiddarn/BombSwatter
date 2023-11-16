@@ -7,10 +7,21 @@ namespace VonRiddarn.BombSwatter
 {
 	internal static class Data
 	{
-		public static Dictionary<TextureKeys, Texture2D> Textures = new Dictionary<TextureKeys, Texture2D>();
+		static Dictionary<TextureKeys, Texture2D> Textures = new Dictionary<TextureKeys, Texture2D>();
+
+		static Texture2D defaultTexture;
+
+		public static Texture2D GetTexture(TextureKeys textureKey)
+		{
+			if (Textures.TryGetValue(textureKey, out Texture2D texture))
+				return texture;
+
+			return defaultTexture;
+		}
 
 		public static void LoadTextures(ContentManager content)
 		{
+			defaultTexture = content.Load<Texture2D>("TextureNotFound");
 			Textures.Add(TextureKeys.Tile_Default, content.Load<Texture2D>("Tile_Default"));
 			Textures.Add(TextureKeys.Tile_Activated, content.Load<Texture2D>("Tile_Activated"));
 			Textures.Add(TextureKeys.TileDecor_Flag, content.Load<Texture2D>("TileDecor_Flag"));
@@ -18,6 +29,7 @@ namespace VonRiddarn.BombSwatter
 			Textures.Add(TextureKeys.TileDecor_Bomb, content.Load<Texture2D>("TileDecor_Bomb"));
 			Textures.Add(TextureKeys.TileDecor_X, content.Load<Texture2D>("TileDecor_X"));
 			Textures.Add(TextureKeys.TileDecor_Box, content.Load<Texture2D>("TileDecor_Box"));
+			Textures.Add(TextureKeys.TileDecor_Marker, content.Load<Texture2D>("TileDecor_Marker"));
 			Textures.Add(TextureKeys.TileDecor_1, content.Load<Texture2D>("TileDecor_1"));
 			Textures.Add(TextureKeys.TileDecor_2, content.Load<Texture2D>("TileDecor_2"));
 			Textures.Add(TextureKeys.TileDecor_3, content.Load<Texture2D>("TileDecor_3"));

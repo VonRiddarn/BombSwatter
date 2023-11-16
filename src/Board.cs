@@ -108,6 +108,16 @@ namespace VonRiddarn.BombSwatter
 			}
 		}
 
+		public void AddFlag()
+		{
+			_disarmedAmount++;
+		}
+
+		public void RemoveFlag()
+		{
+			_disarmedAmount--;
+		}
+
 
 		Cell[] _GetAdjacentCells(Cell cell)
 		{

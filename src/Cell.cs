@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace VonRiddarn.BombSwatter
@@ -18,7 +19,7 @@ namespace VonRiddarn.BombSwatter
 		public (int row, int col) CellPosition { get; private set; } = (0, 0);
 
 		// Private
-		bool _active = true;
+		List<Texture2D> _tileDecors = new List<Texture2D>();
 
 		int _adjacentBombs = 0;
 		public int AdjacentBombs
@@ -69,49 +70,26 @@ namespace VonRiddarn.BombSwatter
 			switch (AdjacentBombs)
 			{
 				case -1:
-					Color = Color.Black;
-					break;
+					_board.LoseGame();
+					return;
 				case 0:
-					Color = Color.Green;
 					foreach (Cell cell in AdjacentCells)
 					{
 						if (cell.AdjacentBombs != -1 && cell.CellState == CellState.Default && cell != this)
 							cell.Activate();
 					}
 					break;
-				case 1:
-					Color = Color.LightCyan;
-					break;
-				case 2:
-					Color = Color.LightBlue;
-					break;
-				case 3:
-					Color = Color.Blue;
-					break;
-				case 4:
-					Color = Color.Yellow;
-					break;
-				case 5:
-					Color = Color.Orange;
-					break;
-				case 6:
-					Color = Color.Red;
-					break;
-				case 7:
-					Color = Color.DarkRed;
-					break;
-				case 8:
-					Color = Color.DarkRed;
-					break;
-				default:
-					break;
 			}
+
+			ApplyActivateGraphics();
 
 			// If this cell has 0 adjacent bombs, activate all cells around it that also has 0 adjacent bombs.
 		}
 
 		public void ForceActivate()
 		{
+			ApplyForceActivateGraphics();
+			CellState = CellState.Activated;
 			// Called when the player has lost the game by pressing a bomb.
 			// Set the texture to Active and place the decor.
 			// Then add whatever state decor the player had applied on top of that decor.
@@ -136,16 +114,15 @@ namespace VonRiddarn.BombSwatter
 
 		public override void OnRightMouseDown()
 		{
-			if (CellState != CellState.Default)
+			if (CellState == CellState.Activated)
 				return;
 
-			Color = Color.Purple;
-			CellState = CellState.Flagged;
+			ApplyStateUpdateGraphics();
 		}
 
 		public override void OnHoverEnter()
 		{
-			if (CellState != CellState.Default)
+			if (CellState == CellState.Activated)
 				return;
 
 			Color = Color.Yellow;
@@ -153,13 +130,144 @@ namespace VonRiddarn.BombSwatter
 
 		public override void OnHoverExit()
 		{
-			if (CellState != CellState.Default)
+			if (CellState == CellState.Activated)
 				return;
 
 			Color = Color.White;
 		}
 
 		// ----- GRAPHICS & RENDERING -----
+
+		public void ApplyStateUpdateGraphics()
+		{
+			switch (CellState)
+			{
+				case CellState.Default:
+					CellState = CellState.Disarmed;
+					_board.AddFlag();
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Flag));
+					break;
+
+				case CellState.Disarmed:
+					CellState = CellState.Flagged;
+					_board.RemoveFlag();
+					_tileDecors.Remove(Data.GetTexture(TextureKeys.TileDecor_Flag));
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Questionmark));
+					break;
+
+				case CellState.Flagged:
+					CellState = CellState.Default;
+					_tileDecors.Remove(Data.GetTexture(TextureKeys.TileDecor_Questionmark));
+					break;
+
+			}
+		}
+
+		public void ApplyActivateGraphics()
+		{
+			_texture = Data.GetTexture(TextureKeys.Tile_Activated);
+			Color = Color.White;
+
+			// Add tile decor layer 1
+			switch (AdjacentBombs)
+			{
+				case -1:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Bomb));
+					Color = Color.Red;
+					break;
+				case 1:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_1));
+					break;
+				case 2:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_2));
+					break;
+				case 3:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_3));
+					break;
+				case 4:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_4));
+					break;
+				case 5:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_5));
+					break;
+				case 6:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_6));
+					break;
+				case 7:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_7));
+					break;
+				case 8:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_8));
+					break;
+				default:
+					break;
+			}
+		}
+
+		public void ApplyForceActivateGraphics()
+		{
+			_texture = Data.GetTexture(TextureKeys.Tile_Activated);
+			Color = Color.White;
+
+			// Add tile decor layer 1
+			switch (AdjacentBombs)
+			{
+				case -1:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Bomb));
+					Color = Color.Red;
+					break;
+				case 1:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_1));
+					break;
+				case 2:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_2));
+					break;
+				case 3:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_3));
+					break;
+				case 4:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_4));
+					break;
+				case 5:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_5));
+					break;
+				case 6:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_6));
+					break;
+				case 7:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_7));
+					break;
+				case 8:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_8));
+					break;
+				default:
+					break;
+			}
+
+			switch (CellState)
+			{
+				case CellState.Disarmed:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_X));
+					_tileDecors.Remove(Data.GetTexture(TextureKeys.TileDecor_Flag));
+					break;
+				case CellState.Flagged:
+					_tileDecors.Add(Data.GetTexture(TextureKeys.TileDecor_Box));
+					_tileDecors.Remove(Data.GetTexture(TextureKeys.TileDecor_Questionmark));
+					break;
+				default:
+					break;
+				}
+
+		}
+
+		public override void Draw(SpriteBatch spriteBatch)
+		{
+			spriteBatch.Draw(_texture, _position, Color);
+			foreach (Texture2D t in _tileDecors)
+			{
+				spriteBatch.Draw(t, _position, Color.White);
+			}
+		}
 
 		public void UpdateCellPosition()
 		{
