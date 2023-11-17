@@ -9,7 +9,7 @@ namespace VonRiddarn.BombSwatter
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 
-		Board board = new Board(15, 25, 25);
+		Board board = new Board(15, 25, 45);
 		Texture2D cellTexture;
 
 		bool restartFlag = false;
@@ -77,7 +77,7 @@ namespace VonRiddarn.BombSwatter
 		{
 			if (Keyboard.GetState().IsKeyDown(Keys.R) && !restartFlag)
 			{
-				board = new Board(15, 25, 25);
+				board = new Board(15, 25, 45);
 				board.InitializeAllCellTextures();
 				restartFlag = true;
 			}
