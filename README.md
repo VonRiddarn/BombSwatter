@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="https://i.imgur.com/6ojlnUy.png"/>
+  <img src="https://i.imgur.com/h4lYfFk.png"/>
 </p>
 <p align="center">A not so original idea for a game!</p>
 
