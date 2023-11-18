@@ -20,7 +20,7 @@ Should I go about to update the game I'll probably add: Menu - Choose difficulty
 ## How to play
 Left mouse	:	Open a cell<br/>
 Right mouse	:	Disarm or flag a cell<br/>
-R			:	Restart the board (Takes a few seconds to load)<br/>
+R			:	Restart the board (MIGHT take a few seconds to load - but probably shouldn't)<br/>
 <br/>
 Notice: Disarmed and flagged cells cannot be opened.<br/>
 
